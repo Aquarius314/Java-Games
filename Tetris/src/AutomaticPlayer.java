@@ -1,3 +1,7 @@
+/*
+this one is currently being designed. At this moment it sucks really bad.
+I am working on it so it won't suck. Or, at least, suck better.
+*/
 import java.util.Random;
 
 public class AutomaticPlayer extends Task {
@@ -18,7 +22,7 @@ public class AutomaticPlayer extends Task {
 	private void takeControll(){
 				/*
 				 * skrypt AI dla Tetrisa
-				 * zaczêto pisaæ 24.05.2016
+				 * zaczÃªto pisaÃ¦ 24.05.2016
 				 */
 		if(!World.players.get(index).getBoard().getBlock().isFalling){
 			World.players.get(index).points = new int[Board.getWidth()];
@@ -101,16 +105,16 @@ public class AutomaticPlayer extends Task {
 			for(int iHeight = 0 ; iHeight < Board.getHeight() ; iHeight++){
 				if(b.getField(iWidth, iHeight).getContent() == 2){	// znaczy ze mamy wierzcholek!
 					heights[iWidth] = Board.getHeight() - iHeight;
-					iHeight = Board.getHeight(); // ¿eby skoñczyæ wewnêtrzn¹ pêtlê.
+					iHeight = Board.getHeight(); // Â¿eby skoÃ±czyÃ¦ wewnÃªtrznÂ¹ pÃªtlÃª.
 				}
 			}						
 		}
 		
 		return heights;
 	}
-	private void analyze1(){	// Analiza wysokoœci
+	private void analyze1(){	// Analiza wysokoÅ“ci
 		/* 
-		 * pierwszy typ analizy. Mierzy wysokoœci na poszczególnych szerokoœciach i najmocniej wycenia najni¿sze
+		 * pierwszy typ analizy. Mierzy wysokoÅ“ci na poszczegÃ³lnych szerokoÅ“ciach i najmocniej wycenia najniÂ¿sze
 		 */
 		int[] heights = measureHeights(World.players.get(index).getBoard());
 
@@ -124,15 +128,15 @@ public class AutomaticPlayer extends Task {
 		Block block = World.players.get(index).getBoard().getBlock();	// spisuje klocka
 		// klocek podluzny tej analizie nie podlega.
 		if(block.getType() == 1){
-			// nic nie rób.
+			// nic nie rÃ³b.
 		}
 		else{	// zatem bierzemy pod uwage wszystkie klocki oprocz podluznego.
 				// mozemy wiec zamykac je w macierzy 3x3, co ulatwi obliczenia.
 			// tworze macierz 3x3 i przerzucam do niej klocka:
 			int[][] blockMatrix = saveBlockInMatrix(block);		// tworze i zeruje macierz 4x4		
 			
-			// mam utworzona macierz przechowujaca klocka. Teraz porownuje j¹ z najwyzej wysunietymi elementami na dole.
-			// jaka jest suma ró¿nic pomiêdzy wysokoœciami?
+			// mam utworzona macierz przechowujaca klocka. Teraz porownuje jÂ¹ z najwyzej wysunietymi elementami na dole.
+			// jaka jest suma rÃ³Â¿nic pomiÃªdzy wysokoÅ“ciami?
 			int[] heights = measureHeights(World.players.get(index).getBoard());
 			int currentDifferencesSum = measureHeightsDifferences(heights);
 			
@@ -143,7 +147,7 @@ public class AutomaticPlayer extends Task {
 			for(int iWidth = 0 ; iWidth < Board.getWidth(); iWidth++){
 				for(int iRotates = 0 ; iRotates < 4 ; iRotates++){
 					newBoard = World.players.get(index).getBoard();
-					// przesuwamy klocka do lewej œciany, o ile to mo¿liwe (po to jest iControl, dla bezpieczenstwa)
+					// przesuwamy klocka do lewej Å“ciany, o ile to moÂ¿liwe (po to jest iControl, dla bezpieczenstwa)
 					
 					for(int iControl = 0 ; newBoard.getBlock().getX(0) > 0 && iControl < 10 ; iControl++){
 						newBoard.getBlock().moveLeft();
@@ -152,7 +156,7 @@ public class AutomaticPlayer extends Task {
 					for(int i = 0 ; i < iWidth ; i++){
 						newBoard.getBlock().moveRight();
 					}
-					// nastêpnie obracamy go tyle razy ile wymaga iRotates (o ile siê da, tym siê martwi¹ inne funkcje)
+					// nastÃªpnie obracamy go tyle razy ile wymaga iRotates (o ile siÃª da, tym siÃª martwiÂ¹ inne funkcje)
 					for(int i = 0 ; i < iRotates ; i++){
 						newBoard.getBlock().rotate();
 					}
@@ -171,7 +175,7 @@ public class AutomaticPlayer extends Task {
 					
 				}
 			}
-			// przesuwamy klocka do lewej œciany, o ile to mo¿liwe (po to jest iControl, dla bezpieczenstwa)
+			// przesuwamy klocka do lewej Å“ciany, o ile to moÂ¿liwe (po to jest iControl, dla bezpieczenstwa)
 			for(int iControl = 0 ; World.players.get(index).getBoard().getBlock().getX(0) > 0 && iControl < 10 ; iControl++){
 				World.players.get(index).getBoard().getBlock().moveLeft();
 			}
@@ -179,7 +183,7 @@ public class AutomaticPlayer extends Task {
 			for(int i = 0 ; i < minimumWidth ; i++){
 				World.players.get(index).getBoard().getBlock().moveRight();
 			}
-			// nastêpnie obracamy go tyle razy ile wymaga iRotates (o ile siê da, tym siê martwi¹ inne funkcje)
+			// nastÃªpnie obracamy go tyle razy ile wymaga iRotates (o ile siÃª da, tym siÃª martwiÂ¹ inne funkcje)
 			for(int i = 0 ; i < minimumRotates ; i++){
 				System.out.println("Obracam!");
 				World.players.get(index).getBoard().getBlock().rotate();
