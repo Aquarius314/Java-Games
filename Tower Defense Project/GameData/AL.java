@@ -1,4 +1,6 @@
 
+// more frequent, long algorithms will be here
+
 public class AL {
 
 	private AL() {
