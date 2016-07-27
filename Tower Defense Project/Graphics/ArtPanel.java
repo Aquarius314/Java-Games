@@ -19,6 +19,7 @@ public class ArtPanel extends JPanel{
 	long renderingTime = System.currentTimeMillis();
 	static int framesPerSec = 60;
 	public ArtPanel(){
+		Displayer.loadFiles();
 		manualSettings();
 	}
 	protected void manualSettings(){

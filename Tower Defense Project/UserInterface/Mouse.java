@@ -19,11 +19,11 @@ public class Mouse implements MouseListener, MouseMotionListener{
 		}
 		//TODO remove below
 		if(arg0.getButton() == MouseEvent.BUTTON1)
-			Window.game.currentMap.towerFactory.buildTower(TowerType.ARCHER, xClick, yClick);
+			TowerFactory.buildTower(TowerType.ARCHER, xClick, yClick);
 		else if(arg0.getButton() == MouseEvent.BUTTON3)
-			Window.game.currentMap.towerFactory.buildTower(TowerType.ARTILLERY, xClick, yClick);
+			TowerFactory.buildTower(TowerType.ARTILLERY, xClick, yClick);
 		else
-			Window.game.currentMap.towerFactory.destroyTower(xClick, yClick);
+			TowerFactory.destroyTower(xClick, yClick);
 	}
 	public void mouseEntered(MouseEvent arg0){
 	}

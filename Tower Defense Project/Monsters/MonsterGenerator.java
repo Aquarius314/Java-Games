@@ -1,25 +1,30 @@
 import java.util.Random;
 
-public class MonsterGenerator implements Runnable{
+public class MonsterGenerator{
 
 	private Map parentMap;
-	private int timePeriod = 200;
+	private int generationPeriod = 300;
 	private int xStart, yStart;
+	private long lastCreationTime;
+	private boolean doubleCreation = false;
 	
 	public MonsterGenerator(Map parentMap) {
+		lastCreationTime = System.currentTimeMillis();
 		this.parentMap = parentMap;
 		setStart();
 	}
 
-	@Override
-	public void run() {
+	public void generate() {
 		if(parentMap.monstersToGenerate > 0){
-			createMonster(xStart, yStart);
+			if(System.currentTimeMillis() - lastCreationTime >= generationPeriod){
+				lastCreationTime = System.currentTimeMillis();
+				createMonster(xStart, yStart);
+				if(doubleCreation)
+					createMonster(xStart, yStart);
+			}
 		}
 	}
 	private void createMonster(int x, int y){
-		x += new Random().nextInt(9)-4;
-		y += new Random().nextInt(9)-4;
 		Map.monsters.add(new Monster(x, y));
 		parentMap.monstersToGenerate--;
 	}
@@ -28,7 +33,7 @@ public class MonsterGenerator implements Runnable{
 		yStart = parentMap.getLevelStartY();
 	}
 	public int getTimePeriod(){
-		return timePeriod;
+		return generationPeriod;
 	}
 	
 

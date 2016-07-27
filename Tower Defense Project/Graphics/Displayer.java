@@ -1,26 +1,55 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 public class Displayer {
 	
 	public static ArrayList <Explosion> explosions = new ArrayList <Explosion> ();
+	
+	private static int[] xTriangle = {  4, -6,  4 };
+	private static int[] yTriangle = { -4,  0,  4 };
+	//BufferedImage emptyFile;
+	static File imageFile;
+	static BufferedImage arrowImage;
+	static BufferedImage[] segments = new BufferedImage[4];
 
 	private Displayer(){};
 	
+	public static void loadFiles(){
+		String pathName = "Images/";
+		pathName += "Arrow2.png";
+		System.out.println("Wczytuje: "+pathName);
+		imageFile = new File(pathName);
+		try { 
+			arrowImage = ImageIO.read(imageFile);
+		}	
+		catch (IOException e) {	
+			System.out.println("Brak jakiegos pliku do wczytania.");
+		}
+	}
 	public static void displayBackground(Graphics g){
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 2000, 1000);
 	}
 	public static void displayMonster(Graphics g, Monster m){
-		if(m.isAlive())
-			g.setColor(m.getColor());
-		else
-			g.setColor(m.getColor().darker().darker().darker().darker().darker());
-		g.fillOval(m.getX()-m.getSize()/2 + Game.xMap, m.getY()-m.getSize()/2 + Game.yMap, m.getSize(), m.getSize());
-		g.setColor(Color.black);
-		g.drawOval(m.getX()-m.getSize()/2 + Game.xMap, m.getY()-m.getSize()/2 + Game.yMap, m.getSize(), m.getSize());
+		// MAGIC BEGINS
+		int rendSize = 11;
+		int rendX = m.getX() - m.getSize() + Game.xMap;
+		int rendY = m.getY() - m.getSize() + Game.yMap;
+		AffineTransform AT = AffineTransform.getTranslateInstance(rendX, rendY);
+		AT.translate(rendSize, rendSize);
+		AT.rotate(m.getRotationInRadians());
+		AT.translate(-rendSize, -rendSize);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(arrowImage, AT, null);
 	}
 	public static void displayMap(Graphics g, Map m){
 		g.setColor(Color.red);
@@ -38,7 +67,6 @@ public class Displayer {
 				g.fillRect(i*Game.SIZE + Game.xMap, j*Game.SIZE + Game.yMap, Game.SIZE-1, Game.SIZE-1);
 			}
 		}
-		displayPath(g, m);
 	}
 	public static void displayTower(Graphics g, Tower t){
 		g.setFont(new Font("Times New Roman", Font.BOLD, 24));
@@ -82,6 +110,16 @@ public class Displayer {
 		for(Explosion e : explosions){
 			e.explode(g);
 		}
+	}
+	public static void displayPage(Graphics g,  Page p){
+		int rendX = Menu.xCorner + 2;
+		int rendY = Menu.yCorner - 1;
+		g.setColor(Color.red);
+		for(int i = 0; i < 5; i++)
+			g.drawRect(rendX-i, rendY-i, Page.WIDTH + 2*i, Map.HEIGHT*Game.SIZE + 2*i);
+		
+		for(PageElement e : p.elements)
+			e.display(g);
 	}
 	private static void displayPath(Graphics g, Map m){
 		g.setColor(Color.white);

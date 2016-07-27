@@ -2,6 +2,8 @@ import java.awt.Color;
 
 public abstract class Tower {
 
+	protected int cost = 150;
+	protected int sellValue = 100;
 	protected int xPos, yPos;
 	protected int range;
 	protected String name;
@@ -11,7 +13,7 @@ public abstract class Tower {
 	protected final int MAX_LEVEL = 3;
 	protected int level = 1;
 	protected long lastShotTime = System.currentTimeMillis();
-	private boolean showRange = false;
+	public boolean showRange = false;
 	Color color;
 	
 	public Tower(int xField, int yField) {
@@ -66,5 +68,17 @@ public abstract class Tower {
 	}
 	public boolean showRange(){
 		return showRange;
+	}
+	public int getCost(){
+		return cost;
+	}
+	public int getSellValue(){
+		return sellValue;
+	}
+	public String getName(){
+		return name;
+	}
+	public int getLevel(){
+		return level;
 	}
 }
