@@ -1,5 +1,5 @@
 
-// more frequent, long algorithms will be here
+// more frequent/long algorithms will be here
 
 public class AL {
 
